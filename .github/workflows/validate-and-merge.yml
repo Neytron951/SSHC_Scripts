@@ -1,0 +1,66 @@
+name: Validate and Auto-Merge PR
+on:
+  pull_request:
+    paths:
+      - 'scripts/**'
+
+jobs:
+  validate-and-merge:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check Contributor Path
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const prNumber = context.payload.pull_request.number;
+            const author = context.payload.pull_request.user.login.toLowerCase();
+
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner,
+              repo,
+              pull_number: prNumber,
+            });
+
+            // Rule: All files must be under scripts/{author_username}/
+            const invalidFiles = files.filter(file => {
+              const parts = file.filename.split('/');
+              return parts[0] !== 'scripts' || parts[1].toLowerCase() !== author;
+            });
+
+            if (invalidFiles.length > 0) {
+              core.setFailed(`Security Error: You can only modify files in scripts/${author}/`);
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: prNumber,
+                body: `**Access Denied!** You are trying to modify files outside of your personal folder (\`scripts/${author}/\`). Please fix your PR.`
+              });
+              return;
+            }
+
+            console.log("Path validation passed!");
+
+      - name: Auto-Merge if Valid
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const prNumber = context.payload.pull_request.number;
+
+            await github.rest.pulls.merge({
+              owner,
+              repo,
+              pull_number: prNumber,
+              merge_method: 'squash'
+            });
+
+            console.log

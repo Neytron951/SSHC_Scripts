@@ -13,7 +13,7 @@
       "debian11",
       "debian12"
     ],
-    "isDangerous": true,
+    "isDangerous": false,
     "githubUrl": "https://github.com/Neytron951/SSHC_Scripts/tree/main/scripts/neytron951/system-update"
   }
 ]

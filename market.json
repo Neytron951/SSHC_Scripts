@@ -1,1 +1,19 @@
-[]
+[
+  {
+    "id": "neytron951_system-update",
+    "name": "System Update (Ubuntu/Debian)",
+    "description": "Обновляет список пакетов и устанавливает обновления безопасности. Рекомендуется запускать перед установкой софта.",
+    "command": "sudo apt update && sudo apt upgrade -y\n",
+    "author": "neytron951",
+    "category": "Utils",
+    "compatibleOs": [
+      "ubuntu2004",
+      "ubuntu2204",
+      "ubuntu2404",
+      "debian11",
+      "debian12"
+    ],
+    "isDangerous": true,
+    "githubUrl": "https://github.com/Neytron951/SSHC_Scripts/tree/main/scripts/neytron951/system-update"
+  }
+]

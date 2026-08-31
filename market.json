@@ -26,7 +26,7 @@
   {
     "id": "neytron951_system-update",
     "name": "System Update (Ubuntu/Debian)",
-    "description": "Обновляет список пакетов и устанавливает обновления безопасности. Рекомендуется запускать перед установкой софта.",
+    "description": "Updates the list of packages and installs security updates. It is recommended to run this before installing the software.",
     "command": "sudo apt update && sudo apt upgrade -y\n",
     "author": "neytron951",
     "category": "Utils",

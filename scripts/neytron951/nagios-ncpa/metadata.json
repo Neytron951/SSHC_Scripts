@@ -1,0 +1,7 @@
+{
+  "name": "Nagios Cross Platform Agent (NCPA)",
+  "description": "Installs Nagios NCPA agent for remote monitoring. The default port is 5693.",
+  "category": "Monitoring",
+  "compatibleOs": ["centos9", "alma8", "alma9", "rocky8", "rocky9", "oracle8", "oracle9", "debian11", "debian12", "ubuntu2004", "ubuntu2204", "ubuntu2404"],
+  "isDangerous": false
+}
